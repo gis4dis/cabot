@@ -4,7 +4,12 @@ from setuptools import setup, find_packages
 from os import environ as env
 import subprocess
 
-from pip.req import parse_requirements
+
+# from pip.req import parse_requirements
+def parse_requirements(filename):
+    """ load requirements from a pip requirements file """
+    lineiter = (line.strip() for line in open(filename))
+    return [line for line in lineiter if line and not line.startswith("#")]
 
 requirements = [str(req.req) for req in parse_requirements('requirements.txt', session=False)]
 requirements_plugins = [str(req.req) for req in parse_requirements('requirements-plugins.txt', session=False)]
